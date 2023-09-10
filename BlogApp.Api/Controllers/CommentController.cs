@@ -30,9 +30,7 @@ namespace BlogApp.Api.Controllers
         [HttpDelete("{postId}/{commentId}")]
         public async Task<IActionResult> Delete(string postId, string commentId, CancellationToken cancellationToken = default)
         {
-            return Ok(await _commentService.DeletComment(new DeleteCommentRequest(commentId , postId) ,cancellationToken));
+            return Ok(await _commentService.DeleteComment(new DeleteCommentRequest(commentId , postId) ,cancellationToken));
         }
-
-
     }
 }
