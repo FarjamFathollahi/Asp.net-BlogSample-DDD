@@ -1,3 +1,4 @@
+using BlogApp.Api;
 using BlogApp.Application.Comments;
 using BlogApp.Application.Posts;
 using BlogApp.Contracts.Comments.Commands;
@@ -16,7 +17,10 @@ builder.Services.AddDbContext<BlogDbContext>(options =>
 );
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(config => 
+{
+    config.Filters.Add(new FilterAction());
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

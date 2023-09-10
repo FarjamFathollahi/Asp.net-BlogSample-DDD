@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using BlogApp.Contracts.Posts.Commands;
 using BlogApp.Contracts.Posts.Commands.GetPost;
 using BlogApp.Contracts.Posts.Commands.CreatePost;
-using BlogApp.Contracts.Posts.Commands;
 using BlogApp.Contracts.Posts.Commands.EditPost;
 using BlogApp.Contracts.Posts.Commands.GetAllPost;
 using BlogApp.Contracts.Posts.Commands.DeletePost;

@@ -17,6 +17,8 @@ namespace BlogApp.Application.Comments
         public async Task<CreateCommentResult> CreateComment(CreateCommentRequest request, CancellationToken cancellationToken = default)
         {
             var post = await _postRepository.GetByIdAsync(request.PostId, cancellationToken);
+            if (post == null)
+                throw new NullReferenceException("Post Not Found.");
             var comment = post.AddComment(request.Content, request.Author);
             _postRepository.Update(post);
             await _postRepository.SaveChangesAsync(cancellationToken);
