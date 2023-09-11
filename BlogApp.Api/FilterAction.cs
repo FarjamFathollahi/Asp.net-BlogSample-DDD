@@ -9,10 +9,12 @@ namespace BlogApp.Api
         {
 
             var exp = context.Exception != null;
-            if (exp)
+            if (exp) 
+            {
                 context.ExceptionHandled = true;
                 var data = new { ErrorMessage = context.Exception.Message };
                 context.Result = new NotFoundObjectResult(data);
+            }
         }
     }
 }

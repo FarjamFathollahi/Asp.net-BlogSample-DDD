@@ -25,7 +25,8 @@ builder.Services.AddControllers(config =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
+var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(a=> a.FullName.Contains("BlogApp.Contracts")).ToArray();
+builder.Services.AddMediatR(conf => conf.RegisterServicesFromAssemblies(assemblies));
 
 builder.Services.AddScoped<IPostRepository , PostRepository>();
 builder.Services.AddScoped<IPostService, PostService>();

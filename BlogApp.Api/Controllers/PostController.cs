@@ -5,6 +5,7 @@ using BlogApp.Contracts.Posts.Commands.CreatePost;
 using BlogApp.Contracts.Posts.Commands.EditPost;
 using BlogApp.Contracts.Posts.Commands.GetAllPost;
 using BlogApp.Contracts.Posts.Commands.DeletePost;
+using MediatR;
 
 namespace BlogApp.Api.Controllers
 {
@@ -13,8 +14,10 @@ namespace BlogApp.Api.Controllers
     public class PostController : ControllerBase
     {
         IPostService _postService;
-        public PostController(IPostService postService)
+        IMediator _mediator;
+        public PostController(IPostService postService, IMediator mediator)
         {
+            _mediator = mediator;
             _postService = postService;
         }
         [HttpGet]
@@ -30,7 +33,8 @@ namespace BlogApp.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(CreatePostRequest request, CancellationToken cancellationToken = default)
         {
-            return Ok(await _postService.CreatePostAsync(request, cancellationToken));
+            var post = await _mediator.Send(request);
+            return Ok(post);
         }
         [HttpPut]
         public async Task<IActionResult> Put(EditPostRequest request, CancellationToken cancellationToken = default)
