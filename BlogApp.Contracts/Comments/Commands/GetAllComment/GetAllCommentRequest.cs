@@ -1,10 +1,12 @@
-﻿namespace BlogApp.Contracts.Comments.Commands.GetAllComment
+﻿using MediatR;
+
+namespace BlogApp.Contracts.Comments.Commands.GetAllComment
 {
-    public class GetAllCommentRequest
+    public class GetAllCommentQuery : IRequest<List<GetAllCommentResult>>
     {
         public string PostId { get; set; }
 
-        public GetAllCommentRequest(string postId)
+        public GetAllCommentQuery(string postId)
         {
             PostId = postId;
         }

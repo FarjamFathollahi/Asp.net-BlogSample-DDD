@@ -8,10 +8,10 @@ namespace BlogApp.Contracts.Posts.Commands
 {
     public interface IPostService
     {
-        Task<List<GetAllPostResult>> GetAllPostsAsync(GetAllPostRequest request, CancellationToken cancellationToken = default);
-        Task<GetPostResult> GetPostAsync(GetPostRequest request, CancellationToken cancellationToken = default);
-        Task<CreatePostResult> CreatePostAsync(CreatePostRequest request, CancellationToken cancellationToken = default);
-        Task<EditPostResult> EditPostAsync(EditPostRequest request, CancellationToken cancellationToken = default);
-        Task<DeletePostResult> DeletePostAsync(DeletePostRequest request, CancellationToken cancellationToken = default);
+        Task<List<GetAllPostResult>> GetAllPostsAsync(GetAllPostQuery request, CancellationToken cancellationToken = default);
+        Task<GetPostResult> GetPostAsync(GetPostQuery request, CancellationToken cancellationToken = default);
+        Task<CreatePostResult> CreatePostAsync(CreatePostCommand request, CancellationToken cancellationToken = default);
+        Task<EditPostResult> EditPostAsync(EditPostCommand request, CancellationToken cancellationToken = default);
+        Task<DeletePostResult> DeletePostAsync(DeletePostCommand request, CancellationToken cancellationToken = default);
     }
 }

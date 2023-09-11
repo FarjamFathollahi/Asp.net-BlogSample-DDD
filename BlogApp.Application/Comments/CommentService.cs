@@ -14,7 +14,7 @@ namespace BlogApp.Application.Comments
             _postRepository = postRepository;
         }
 
-        public async Task<CreateCommentResult> CreateComment(CreateCommentRequest request, CancellationToken cancellationToken = default)
+        public async Task<CreateCommentResult> CreateComment(CreateCommentCommand request, CancellationToken cancellationToken = default)
         {
             var post = await _postRepository.GetByIdAsync(request.PostId, cancellationToken);
             if (post == null)
@@ -25,7 +25,7 @@ namespace BlogApp.Application.Comments
             return new CreateCommentResult(comment.Id);
         }
 
-        public async Task<DeleteCommentResult> DeleteComment(DeleteCommentRequest request, CancellationToken cancellationToken = default)
+        public async Task<DeleteCommentResult> DeleteComment(DeleteCommentCommand request, CancellationToken cancellationToken = default)
         {
             var post = await _postRepository.GetByIdAsync(request.PostId, cancellationToken);
             var comment = post.GetComment(request.Id);
@@ -35,7 +35,7 @@ namespace BlogApp.Application.Comments
             return new DeleteCommentResult();
         }
 
-        public async Task<List<GetAllCommentResult>> GetAllCommentsAsync(GetAllCommentRequest request, CancellationToken cancellationToken = default)
+        public async Task<List<GetAllCommentResult>> GetAllCommentsAsync(GetAllCommentQuery request, CancellationToken cancellationToken = default)
         {
             var post = await _postRepository.GetByIdAsync(request.PostId, cancellationToken);
             var comments = post.Comments;

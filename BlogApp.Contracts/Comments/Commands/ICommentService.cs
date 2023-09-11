@@ -6,8 +6,8 @@ namespace BlogApp.Contracts.Comments.Commands
 {
     public interface ICommentService
     {
-        Task<List<GetAllCommentResult>> GetAllCommentsAsync(GetAllCommentRequest request, CancellationToken cancellationToken = default);
-        Task<CreateCommentResult> CreateComment(CreateCommentRequest request, CancellationToken cancellationToken = default);
-        Task<DeleteCommentResult> DeleteComment(DeleteCommentRequest request, CancellationToken cancellationToken = default);
+        Task<List<GetAllCommentResult>> GetAllCommentsAsync(GetAllCommentQuery request, CancellationToken cancellationToken = default);
+        Task<CreateCommentResult> CreateComment(CreateCommentCommand request, CancellationToken cancellationToken = default);
+        Task<DeleteCommentResult> DeleteComment(DeleteCommentCommand request, CancellationToken cancellationToken = default);
     }
 }

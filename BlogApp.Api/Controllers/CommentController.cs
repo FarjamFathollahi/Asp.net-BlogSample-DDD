@@ -1,7 +1,7 @@
-﻿using BlogApp.Contracts.Comments.Commands;
-using BlogApp.Contracts.Comments.Commands.CreateComment;
+﻿using BlogApp.Contracts.Comments.Commands.CreateComment;
 using BlogApp.Contracts.Comments.Commands.DeleteComment;
 using BlogApp.Contracts.Comments.Commands.GetAllComment;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogApp.Api.Controllers
@@ -10,27 +10,27 @@ namespace BlogApp.Api.Controllers
     [Route("[controller]")]
     public class CommentController : ControllerBase
     {
-        ICommentService _commentService;
+        IMediator _mediator;
 
-        public CommentController(ICommentService commentService)
+        public CommentController(IMediator mediator)
         {
-            _commentService = commentService;
+            _mediator = mediator;
         }
         [HttpPost]
-        public async Task<IActionResult> Post(CreateCommentRequest request, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Post(CreateCommentCommand request)
         {
-            var result = await _commentService.CreateComment(request, cancellationToken);
+            var result = await _mediator.Send(request);
             return Ok(result);
         }
         [HttpGet("{postId}")]
-        public async Task<IActionResult> Get(string postId, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Get(string postId)
         {
-            return Ok(await _commentService.GetAllCommentsAsync(new GetAllCommentRequest(postId), cancellationToken));
+            return Ok(await _mediator.Send(new GetAllCommentQuery(postId)));
         }
         [HttpDelete("{postId}/{commentId}")]
-        public async Task<IActionResult> Delete(string postId, string commentId, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Delete(string postId, string commentId)
         {
-            return Ok(await _commentService.DeleteComment(new DeleteCommentRequest(commentId , postId) ,cancellationToken));
+            return Ok(await _mediator.Send(new DeleteCommentCommand(commentId, postId)));
         }
     }
 }

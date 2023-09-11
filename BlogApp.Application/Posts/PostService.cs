@@ -18,7 +18,7 @@ namespace BlogApp.Application.Posts
             _postRepository = postRepository;
         }
 
-        public async Task<CreatePostResult> CreatePostAsync(CreatePostRequest request, CancellationToken cancellationToken = default)
+        public async Task<CreatePostResult> CreatePostAsync(CreatePostCommand request, CancellationToken cancellationToken = default)
         {
             var post = new Post(request.Title, request.Content);
             await _postRepository.AddAsync(post);
@@ -26,7 +26,7 @@ namespace BlogApp.Application.Posts
             return new CreatePostResult(post.Id);
         }
 
-        public async Task<GetPostResult> GetPostAsync(GetPostRequest request, CancellationToken cancellationToken = default)
+        public async Task<GetPostResult> GetPostAsync(GetPostQuery request, CancellationToken cancellationToken = default)
         {
             var post = await _postRepository.GetByIdAsync(request.Id, cancellationToken);
             return new GetPostResult
@@ -37,7 +37,7 @@ namespace BlogApp.Application.Posts
                 CreateDateTime = post.CreatedAt
             };
         }
-        public async Task<EditPostResult> EditPostAsync(EditPostRequest request, CancellationToken cancellationToken = default)
+        public async Task<EditPostResult> EditPostAsync(EditPostCommand request, CancellationToken cancellationToken = default)
         {
             var post = await _postRepository.GetByIdAsync(request.Id, cancellationToken);
             post.EditPost(request.Title, request.Content);
@@ -46,7 +46,7 @@ namespace BlogApp.Application.Posts
             return new EditPostResult();
         }
 
-        public async Task<List<GetAllPostResult>> GetAllPostsAsync(GetAllPostRequest request, CancellationToken cancellationToken)
+        public async Task<List<GetAllPostResult>> GetAllPostsAsync(GetAllPostQuery request, CancellationToken cancellationToken)
         {
             var posts = await _postRepository.GetAllAsync(cancellationToken);
             var result = posts.Select(p => new GetAllPostResult
@@ -58,7 +58,7 @@ namespace BlogApp.Application.Posts
             return result;
         }
 
-        public async Task<DeletePostResult> DeletePostAsync(DeletePostRequest request, CancellationToken cancellationToken = default)
+        public async Task<DeletePostResult> DeletePostAsync(DeletePostCommand request, CancellationToken cancellationToken = default)
         {
             var post = await _postRepository.GetByIdAsync(request.Id, cancellationToken);
             _postRepository.Remove(post);

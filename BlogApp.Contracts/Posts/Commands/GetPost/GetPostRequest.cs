@@ -1,10 +1,12 @@
-﻿namespace BlogApp.Contracts.Posts.Commands.GetPost
+﻿using MediatR;
+
+namespace BlogApp.Contracts.Posts.Commands.GetPost
 {
-    public class GetPostRequest
+    public class GetPostQuery : IRequest<GetPostResult>
     {
         public string Id { get; set; }
 
-        public GetPostRequest(string id)
+        public GetPostQuery(string id)
         {
             Id = id;
         }

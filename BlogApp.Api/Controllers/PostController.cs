@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using BlogApp.Contracts.Posts.Commands;
-using BlogApp.Contracts.Posts.Commands.GetPost;
-using BlogApp.Contracts.Posts.Commands.CreatePost;
+﻿using BlogApp.Contracts.Posts.Commands.CreatePost;
+using BlogApp.Contracts.Posts.Commands.DeletePost;
 using BlogApp.Contracts.Posts.Commands.EditPost;
 using BlogApp.Contracts.Posts.Commands.GetAllPost;
-using BlogApp.Contracts.Posts.Commands.DeletePost;
+using BlogApp.Contracts.Posts.Commands.GetPost;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BlogApp.Api.Controllers
 {
@@ -13,38 +12,38 @@ namespace BlogApp.Api.Controllers
     [Route("[controller]")]
     public class PostController : ControllerBase
     {
-        IPostService _postService;
         IMediator _mediator;
-        public PostController(IPostService postService, IMediator mediator)
+        public PostController(IMediator mediator)
         {
             _mediator = mediator;
-            _postService = postService;
         }
         [HttpGet]
-        public async Task<IActionResult> Get(CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Get()
         {
-            return Ok(await _postService.GetAllPostsAsync(new GetAllPostRequest(), cancellationToken));
+            var posts = await _mediator.Send(new GetAllPostQuery());
+            return Ok(posts);
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(string id, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Get(string id)
         {
-            return Ok(await _postService.GetPostAsync(new GetPostRequest(id), cancellationToken));
+            var post = await _mediator.Send(new GetPostQuery(id));
+            return Ok(post);
         }
         [HttpPost]
-        public async Task<IActionResult> Post(CreatePostRequest request, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Post(CreatePostCommand request)
         {
             var post = await _mediator.Send(request);
             return Ok(post);
         }
         [HttpPut]
-        public async Task<IActionResult> Put(EditPostRequest request, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Put(EditPostCommand request)
         {
-            return Ok(await _postService.EditPostAsync(request, cancellationToken));
+            return Ok(await _mediator.Send(request));
         }
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(string id, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Delete(string id)
         {
-            return Ok(await _postService.DeletePostAsync(new DeletePostRequest(id), cancellationToken));
+            return Ok(await _mediator.Send(new DeletePostCommand(id)));
         }
     }
 }
