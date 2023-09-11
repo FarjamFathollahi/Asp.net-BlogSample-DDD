@@ -8,7 +8,7 @@ namespace BlogApp.Contracts.Posts.Commands
 {
     public interface IPostService
     {
-        Task<List<GetAllPostResult>> GetAllPostsAsync(GetAllPostQuery request, CancellationToken cancellationToken = default);
+        Task<List<GetAllPostsResult>> GetAllPostsAsync(GetAllPostsQuery request, CancellationToken cancellationToken = default);
         Task<GetPostResult> GetPostAsync(GetPostQuery request, CancellationToken cancellationToken = default);
         Task<CreatePostResult> CreatePostAsync(CreatePostCommand request, CancellationToken cancellationToken = default);
         Task<EditPostResult> EditPostAsync(EditPostCommand request, CancellationToken cancellationToken = default);

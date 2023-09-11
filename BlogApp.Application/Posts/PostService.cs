@@ -46,10 +46,10 @@ namespace BlogApp.Application.Posts
             return new EditPostResult();
         }
 
-        public async Task<List<GetAllPostResult>> GetAllPostsAsync(GetAllPostQuery request, CancellationToken cancellationToken)
+        public async Task<List<GetAllPostsResult>> GetAllPostsAsync(GetAllPostsQuery request, CancellationToken cancellationToken)
         {
             var posts = await _postRepository.GetAllAsync(cancellationToken);
-            var result = posts.Select(p => new GetAllPostResult
+            var result = posts.Select(p => new GetAllPostsResult
             {
                 Id = p.Id,
                 Title = p.Title,

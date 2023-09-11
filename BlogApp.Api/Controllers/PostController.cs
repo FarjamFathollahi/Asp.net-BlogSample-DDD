@@ -20,7 +20,7 @@ namespace BlogApp.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var posts = await _mediator.Send(new GetAllPostQuery());
+            var posts = await _mediator.Send(new GetAllPostsQuery());
             return Ok(posts);
         }
         [HttpGet("{id}")]
